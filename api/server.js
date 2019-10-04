@@ -7,7 +7,6 @@
 require('dotenv').config();
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
-var csv  = require('csv-express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 const compression = require('compression');
