@@ -17,7 +17,7 @@ const config = require('./config');
 
 const weather = require('./routes/weather');
 
-
+app.use(morgan);
 // app.use(morgan('dev', { stream: logger.stream }));
 // configure app to use bodyParser()
 // this will let us get the data from a POST
