@@ -8,14 +8,16 @@ const morgan = require('morgan');
 const path = require('path');
 
 app.use(morgan('dev'));
+/*
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!').end();
 });
+*/
 app.get('/test', (req, res) => {
     return res.json({message: 'test'});
 });
 
-app.use('/', express.static(path.join(__dirname, 'static')))
+app.use('/', express.static('/data/weather'));  //path.join(__dirname, 'static')))
 
 const weather = require('./routes/weather');
 app.use('/weather', weather);
