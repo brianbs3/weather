@@ -10,12 +10,12 @@ DEF:a=/data/weather/"$HOSTNAME".rrd:temp_f1:AVERAGE  \
 DEF:b=/data/weather/"$HOSTNAME".rrd:temp_f2:AVERAGE  \
 DEF:c=/data/weather/"$HOSTNAME".rrd:humidity:AVERAGE  \
 CDEF:cdefbf=237.7,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,*,17.271,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,-,/,1.8,*,32,+ \
-AREA:a#FFC73BFF:"F1"  \
+AREA:a#FFC73BFF:"Inside"  \
 GPRINT:a:LAST:"      Last%8.2lf %s"  \
 GPRINT:a:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:a:MAX:"Max%8.2lf %s"  \
 GPRINT:a:MIN:"Min%8.2lf %s\n"  \
-LINE2:b#FF7D00FF:"F2"  \
+LINE2:b#FF7D00FF:"Outside"  \
 GPRINT:b:LAST:"      Last%8.2lf %s"  \
 GPRINT:b:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:b:MAX:"Max%8.2lf %s"  \
@@ -36,12 +36,12 @@ DEF:a=/data/weather/"$HOSTNAME".rrd:temp_f1:AVERAGE  \
 DEF:b=/data/weather/"$HOSTNAME".rrd:temp_f2:AVERAGE  \
 DEF:c=/data/weather/"$HOSTNAME".rrd:humidity:AVERAGE  \
 CDEF:cdefbf=237.7,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,*,17.271,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,-,/,1.8,*,32,+ \
-AREA:a#FFC73BFF:"F1"  \
+AREA:a#FFC73BFF:"Inside"  \
 GPRINT:a:LAST:"      Last%8.2lf %s"  \
 GPRINT:a:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:a:MAX:"Max%8.2lf %s"  \
 GPRINT:a:MIN:"Min%8.2lf %s\n"  \
-LINE2:b#FF7D00FF:"F2"  \
+LINE2:b#FF7D00FF:"Outside"  \
 GPRINT:b:LAST:"      Last%8.2lf %s"  \
 GPRINT:b:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:b:MAX:"Max%8.2lf %s"  \
@@ -62,12 +62,12 @@ DEF:a=/data/weather/"$HOSTNAME".rrd:temp_f1:AVERAGE  \
 DEF:b=/data/weather/"$HOSTNAME".rrd:temp_f2:AVERAGE  \
 DEF:c=/data/weather/"$HOSTNAME".rrd:humidity:AVERAGE  \
 CDEF:cdefbf=237.7,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,*,17.271,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,-,/,1.8,*,32,+ \
-AREA:a#FFC73BFF:"F1"  \
+AREA:a#FFC73BFF:"Inside"  \
 GPRINT:a:LAST:"      Last%8.2lf %s"  \
 GPRINT:a:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:a:MAX:"Max%8.2lf %s"  \
 GPRINT:a:MIN:"Min%8.2lf %s\n"  \
-LINE2:b#FF7D00FF:"F2"  \
+LINE2:b#FF7D00FF:"Outside"  \
 GPRINT:b:LAST:"      Last%8.2lf %s"  \
 GPRINT:b:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:b:MAX:"Max%8.2lf %s"  \
@@ -88,12 +88,12 @@ DEF:a=/data/weather/"$HOSTNAME".rrd:temp_f1:AVERAGE  \
 DEF:b=/data/weather/"$HOSTNAME".rrd:temp_f2:AVERAGE  \
 DEF:c=/data/weather/"$HOSTNAME".rrd:humidity:AVERAGE  \
 CDEF:cdefbf=237.7,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,*,17.271,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,-,/,1.8,*,32,+ \
-AREA:a#FFC73BFF:"F1"  \
+AREA:a#FFC73BFF:"Inside"  \
 GPRINT:a:LAST:"      Last%8.2lf %s"  \
 GPRINT:a:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:a:MAX:"Max%8.2lf %s"  \
 GPRINT:a:MIN:"Min%8.2lf %s\n"  \
-LINE2:b#FF7D00FF:"F2"  \
+LINE2:b#FF7D00FF:"Outside"  \
 GPRINT:b:LAST:"      Last%8.2lf %s"  \
 GPRINT:b:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:b:MAX:"Max%8.2lf %s"  \
@@ -114,12 +114,12 @@ DEF:a=/data/weather/"$HOSTNAME".rrd:temp_f1:AVERAGE  \
 DEF:b=/data/weather/"$HOSTNAME".rrd:temp_f2:AVERAGE  \
 DEF:c=/data/weather/"$HOSTNAME".rrd:humidity:AVERAGE  \
 CDEF:cdefbf=237.7,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,*,17.271,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,-,/,1.8,*,32,+ \
-AREA:a#FFC73BFF:"F1"  \
+AREA:a#FFC73BFF:"Inside"  \
 GPRINT:a:LAST:"      Last%8.2lf %s"  \
 GPRINT:a:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:a:MAX:"Max%8.2lf %s"  \
 GPRINT:a:MIN:"Min%8.2lf %s\n"  \
-LINE2:b#FF7D00FF:"F2"  \
+LINE2:b#FF7D00FF:"Outside"  \
 GPRINT:b:LAST:"      Last%8.2lf %s"  \
 GPRINT:b:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:b:MAX:"Max%8.2lf %s"  \
@@ -141,12 +141,12 @@ DEF:a=/data/weather/"$HOSTNAME".rrd:temp_f1:AVERAGE  \
 DEF:b=/data/weather/"$HOSTNAME".rrd:temp_f2:AVERAGE  \
 DEF:c=/data/weather/"$HOSTNAME".rrd:humidity:AVERAGE  \
 CDEF:cdefbf=237.7,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,*,17.271,17.271,a,32,-,1.8,/,*,237.7,a,32,-,1.8,/,+,/,c,100,/,LOG,+,-,/,1.8,*,32,+ \
-AREA:a#FFC73BFF:"F1"  \
+AREA:a#FFC73BFF:"Inside"  \
 GPRINT:a:LAST:"      Last%8.2lf %s"  \
 GPRINT:a:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:a:MAX:"Max%8.2lf %s"  \
 GPRINT:a:MIN:"Min%8.2lf %s\n"  \
-LINE2:b#FF7D00FF:"F2"  \
+LINE2:b#FF7D00FF:"Outside"  \
 GPRINT:b:LAST:"      Last%8.2lf %s"  \
 GPRINT:b:AVERAGE:"Avg%8.2lf %s"  \
 GPRINT:b:MAX:"Max%8.2lf %s"  \
