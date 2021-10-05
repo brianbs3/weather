@@ -11,32 +11,6 @@ function c2f($c){
     $h = 0;
     $c2 = 0;
     $f2 = 0;
-/*
-    for($i = 0; $i < 50; $i++)
-    {
-      if($h == null)
-      {
-        exec('sudo /usr/local/bin/Adafruit_DHT 11 18 | grep Hum', $humidity_arr);
-        
-        if(isset($humidity_arr[0]))
-        {
-          $t_arr = explode(' ', $humidity_arr[0]);
-          $c2 = trim($t_arr[2]);
-          $f2 = (($c2 * 9)/5) + 32;
-          $h_arr = explode('Hum =', $humidity_arr[0]);
-          $h = trim(rtrim($h_arr[1], '%'));
-        }
-        else
-        {
-          $c2 = 20;
-          $f2 = 70;
-          $h=50;
-        }
-  //      echo"h: $h\n";
-      }
-    }
-*/
-  
   
     $temp_arr = array();
     $c = 0; 
@@ -104,6 +78,19 @@ function c2f($c){
   $result = memcache_get($memcache_obj, "{$hostname}_weather");
 
   $jw = (array) json_decode($result);
+
+  /**************
+  * Redis
+  **************/
+   
+  $redis = new Redis(); 
+  $redis->connect('127.0.0.1', 6379); 
+  $redis->set("F1", "{$jw['F1']}"); 
+  $redis->set("F2", "{$jw['F2']}"); 
+  $redis->set("CPU", "{$jw['CPU']}");  
+  $redis->set("HOSTNAME", "{$hostname}");  
+  $redis->set("ts", "{$ts}");  
+
   $w = "N:{$jw['F1']}:{$jw['C1']}:{$jw['F2']}:{$jw['C2']}:{$jw['Humidity']}:0:{$jw['CPU']}";
   //$w = "N:$f:$c:$f2:$c2:$h";
   $rrd_return = rrd_update($rrd_file, array($w));
