@@ -1,7 +1,7 @@
 'use strict';
 
 const router = require('express').Router();
-const Memcached = require('memcached');
+// const Memcached = require('memcached');
 
 router.get('/', (req, res) => {
   let memcached = new Memcached('localhost:11211', {retries:10,retry:10000,remove:true});
