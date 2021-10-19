@@ -1,0 +1,35 @@
+{
+    "devices":
+    [
+        {
+            "host": "shopWeather1",
+            "ip": "192.168.0.25",
+            "temperatureSensors": [
+                {
+                    "address": "28-011454fb7aaa",
+                    "path": "/sys/bus/w1/devices/",
+                    "deviceFile": "w1_slave",
+                    "name": "Inside Temperature"
+                },
+                {
+                    "address": "28-01145532d9aa",
+                    "path": "/sys/bus/w1/devices/",
+                    "deviceFile": "w1_slave",
+                    "name" : "Outside Temperature"
+                }
+            ]
+        },
+        {
+            "host": "vagrantWeather",
+            "ip": "10.10.10.20",
+            "temperatureSensors": [
+                {
+                    "address": "28-12345678",
+                    "path": "/tmp/bus/w1/devices",
+                    "deviceFile": "w1_slave",
+                    "name": "Test Temperature 1"
+                }
+            ]
+        }
+    ]
+}
