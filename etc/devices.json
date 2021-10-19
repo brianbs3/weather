@@ -9,13 +9,15 @@
                     "address": "28-011454fb7aaa",
                     "path": "/sys/bus/w1/devices/",
                     "deviceFile": "w1_slave",
-                    "name": "Inside Temperature"
+                    "fullName": "Inside Temperature",
+                    "name": "inside_temp"
                 },
                 {
                     "address": "28-01145532d9aa",
                     "path": "/sys/bus/w1/devices/",
                     "deviceFile": "w1_slave",
-                    "name" : "Outside Temperature"
+                    "fullName" : "Outside Temperature",
+                    "name": "outside_temp"
                 }
             ]
         },
@@ -27,7 +29,8 @@
                     "address": "28-12345678",
                     "path": "/tmp/bus/w1/devices",
                     "deviceFile": "w1_slave",
-                    "name": "Test Temperature 1"
+                    "fullName": "Test Temperature 1",
+                    "name": "vagrant_temp1"
                 }
             ]
         }
