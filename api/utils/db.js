@@ -1,10 +1,10 @@
 const redis = require("redis");
-const client = redis.createClient({url: 'redis://192.168.0.25:6379'});
+const client = redis.createClient({url: 'redis://localhost:6379'});
 
 const getRedisWeather = async () => {
     return new Promise(async (resolve, reject) => {
         try{
-    const client = await redis.createClient({url: 'redis://192.168.0.25:6379'});
+    const client = await redis.createClient({url: 'redis://localhost:6379'});
     let weather;
     client.on("error", function(error) {
       console.error(error);
