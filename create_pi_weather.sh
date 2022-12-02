@@ -2,15 +2,10 @@
 
 HOSTNAME=`/bin/hostname`
 echo "hostname: $HOSTNAME"
-FILENAME=$HOSTNAME"_weather.rrd"
+FILENAME=$HOSTNAME".rrd"
 
-if [ -f /data/nas/weather/rrd/"$HOSTNAME"/"$HOSTNAME"_weather.rrd ]
-then
-  echo "file exists"
-  cp /data/nas/weather/rrd/"$HOSTNAME"/"$HOSTNAME"_weather.rrd /opt/bsWeather/rrd/.
-else
   echo "file does not exist"
-  rrdtool create /opt/bsWeather/rrd/$FILENAME --step 60 \
+  rrdtool create /data/weather/$FILENAME --step 60 \
   DS:temp_f1:GAUGE:120:-50:130 \
   DS:temp_c1:GAUGE:120:-50:100 \
   DS:temp_f2:GAUGE:120:-50:130 \
@@ -24,7 +19,3 @@ else
   RRA:AVERAGE:0.5:30:17520 \
   RRA:MIN:0.5:30:17520 \
   RRA:MAX:0.5:30:17520
-  
-  touch /opt/bsWeather/rrd/created
-  mkdir /data/nas/weather/rrd/"$HOSTNAME"
-fi

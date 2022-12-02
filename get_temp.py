@@ -1,7 +1,12 @@
-import os, glob, time, json
+import os, glob, time, json, redis
+
+# 28-0114551eafaa has black mark
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
+
+r = redis.Redis(
+    host='localhost')
 
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
@@ -26,8 +31,12 @@ def read_temp(device, d):
         temp_f = temp_c * 9.0 / 5.0 + 32.0
         return json.dumps({"device": d, "c": temp_c, "f": temp_f})
   
-devices = ["28-011454fb7aaa", "28-01145532d9aa"]
+devices = ["28-011455020eaa", "28-0114551eafaa"]
 for d in devices:
     dev = base_dir + d
-    print(read_temp(base_dir + d, d))
+    temps = read_temp(base_dir + d, d)
+    #r.set(d, json.dumps(temps)['f'])
+    str =   json.loads(temps)
+    print(str['f'])
+    r.set(d, str['f'])
 

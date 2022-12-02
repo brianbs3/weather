@@ -73,9 +73,9 @@ function c2f($c){
   }
   $rrd_file = "/data/weather/{$hostname}.rrd";
   $json_weather = json_encode($w);
-  $memcache_obj = memcache_connect("localhost", 11211);
-  memcache_set($memcache_obj, "{$hostname}_weather", $json_weather, MEMCACHE_COMPRESSED, 600);
-  $result = memcache_get($memcache_obj, "{$hostname}_weather");
+  #$memcache_obj = memcache_connect("localhost", 11211);
+  #memcache_set($memcache_obj, "{$hostname}_weather", $json_weather, MEMCACHE_COMPRESSED, 600);
+  #$result = memcache_get($memcache_obj, "{$hostname}_weather");
 
   $jw = (array) json_decode($result);
 
