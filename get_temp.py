@@ -43,7 +43,7 @@ def read_temp(device, d):
         temp_f = temp_c * 9.0 / 5.0 + 32.0
         return json.dumps({"device": d, "c": temp_c, "f": temp_f})
   
-devices = ["28-011455020eaa", "28-0114551eafaa"]
+devices = ["28-0114551eafaa", "28-011454fb7aaa", "28-01145532d9aa"]
 rrd = {}
 
 
@@ -51,19 +51,27 @@ rrd = {}
 for d in devices:
     dev = base_dir + d
     temps = read_temp(base_dir + d, d)
+    print(temps)
     #r.set(d, json.dumps(temps)['f'])
     str =   json.loads(temps)
     if(d == '28-0114551eafaa'):
+      rrd.update({'Outside': str['f']})
       rrd.update({'F1': str['f']})
       rrd.update({'C1': str['c']})
       red.set('F1', str['f'])
       red.set('C1', str['c'])
-    else:
+    elif(d == '28-011454fb7aaa'):
       rrd.update({'Inside': str['f']})
       rrd.update({'F2': str['f']})
       rrd.update({'C2': str['c']})
       red.set('F2', str['f'])
       red.set('C2', str['c'])
+    elif(d == '28-011454fb7aaa'):
+      red.set('F3', str['f'])
+    elif(d == '28-01145532d9aa'):
+      red.set('F4', str['f'])
+
+    red.set(d, str['f'])
 
 
 humidity = 0

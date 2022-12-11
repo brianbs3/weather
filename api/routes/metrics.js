@@ -9,12 +9,13 @@ router.get('/', async (req, res) => {
   const [w] = await Promise.all([
     getRedisWeather()
   ]);
+  console.log(w);
   const outsideTemp = `# HELP outside_tem Current temperature outside.
 # TYPE outside_temp gauge
-outside_temp ${w['F2']}
+outside_temp ${w['F1']}
 # HELP inside_tem Current temperature inside.
 # TYPE inside_temp gauge
-inside_temp ${w['F1']}
+inside_temp ${w['F2']}
 # HELP cpu_temp Current CPU temperature.
 # TYPE cpu_temp gauge
 cpu_temp ${w['CPU']}`
