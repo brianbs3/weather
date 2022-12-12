@@ -22,10 +22,10 @@ inside_temp ${w['F2']}
 cpu_temp ${w['CPU']}
 # HELP humidity Current Humidity.
 # TYPE humidity gauge
-cpu_temp ${w['humidity']}
+humidity ${w['humidity']}
 # HELP dewpoint Current dewpoint.
 # TYPE humidity gauge
-cpu_temp ${dewpoint}`
+dewpoint ${dewpoint}`
   return res.format ({
     'text/plain': function() {
       res.send(outsideTemp);

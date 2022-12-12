@@ -16,8 +16,9 @@ const getRedisWeather = async () => {
     .get('timestamp')
     .get('hostname')
     .get('humidity')
+    .get('C1')
     .exec((err, replies) => {
-        resolve({F1: replies[0],F2: replies[1], CPU: replies[2], TIMESTAMP: replies[3], hostname: replies[4], humidity: replies[5]});
+        resolve({F1: replies[0],F2: replies[1], CPU: replies[2], TIMESTAMP: replies[3], hostname: replies[4], humidity: replies[5], C1: replies[6]});
     });
   }
   catch(error){
