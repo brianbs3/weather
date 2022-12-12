@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
     getRedisWeather()
   ]);
   console.log(w);
+  const dewpoint = w['F1'] - ((100 - w['humidity']) * (9/25))
   const outsideTemp = `# HELP outside_tem Current temperature outside.
 # TYPE outside_temp gauge
 outside_temp ${w['F1']}
@@ -18,7 +19,13 @@ outside_temp ${w['F1']}
 inside_temp ${w['F2']}
 # HELP cpu_temp Current CPU temperature.
 # TYPE cpu_temp gauge
-cpu_temp ${w['CPU']}`
+cpu_temp ${w['CPU']}
+# HELP humidity Current Humidity.
+# TYPE humidity gauge
+cpu_temp ${w['humidity']}
+# HELP dewpoint Current dewpoint.
+# TYPE humidity gauge
+cpu_temp ${dewpoint}`
   return res.format ({
     'text/plain': function() {
       res.send(outsideTemp);

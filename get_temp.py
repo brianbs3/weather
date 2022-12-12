@@ -1,5 +1,9 @@
 import os, glob, time, json, redis, rrdtool
 from datetime import datetime, timedelta
+import RPi.GPIO as GPIO
+import Freenove_DHT as DHT
+
+DHTPin = 13     #define the pin of DHT11
 
 timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.000Z')
 print(timestamp)
@@ -42,10 +46,25 @@ def read_temp(device, d):
         temp_c = float(temp_string) / 1000.0
         temp_f = temp_c * 9.0 / 5.0 + 32.0
         return json.dumps({"device": d, "c": temp_c, "f": temp_f})
-  
-devices = ["28-0114551eafaa", "28-011454fb7aaa", "28-01145532d9aa"]
-rrd = {}
 
+def humidity_loop():
+    humiditySum = 0
+    dht = DHT.DHT(DHTPin)   #create a DHT class object
+    counts = 0 # Measurement counts
+    while(counts < 10):
+        counts += 1
+        for i in range(0,15):            
+            chk = dht.readDHT11()     #read DHT11 and get a return value. Then determine whether data read is normal according to the return value.
+            if (chk is dht.DHTLIB_OK):      #read DHT11 and get a return value. Then determine whether data read is normal according to the return value.
+                break
+            time.sleep(0.1)
+        humiditySum += dht.humidity
+        time.sleep(2)       
+        
+    return (humiditySum / 10)
+  
+devices = ["28-011455020eaa",  "28-030894971c6d"]
+rrd = {}
 
 
 for d in devices:
@@ -54,27 +73,22 @@ for d in devices:
     print(temps)
     #r.set(d, json.dumps(temps)['f'])
     str =   json.loads(temps)
-    if(d == '28-0114551eafaa'):
+    if(d == '28-011455020eaa'):
       rrd.update({'Outside': str['f']})
       rrd.update({'F1': str['f']})
       rrd.update({'C1': str['c']})
       red.set('F1', str['f'])
       red.set('C1', str['c'])
-    elif(d == '28-011454fb7aaa'):
+    elif(d == '28-030894971c6d'):
       rrd.update({'Inside': str['f']})
       rrd.update({'F2': str['f']})
       rrd.update({'C2': str['c']})
       red.set('F2', str['f'])
       red.set('C2', str['c'])
-    elif(d == '28-011454fb7aaa'):
-      red.set('F3', str['f'])
-    elif(d == '28-01145532d9aa'):
-      red.set('F4', str['f'])
-
-    red.set(d, str['f'])
 
 
-humidity = 0
+humidity = humidity_loop()
+red.set('humidity', humidity)
 cpuTemp = get_cpu_temp()
 red.set('CPU', cpuTemp)
 rrdString = "N:{}:{}:{}:{}:{}:{}:{}".format(rrd['F1'], rrd['C1'], rrd['F2'], rrd['C2'], humidity, 0, cpuTemp)
