@@ -40,6 +40,7 @@ const getRedisWeather = async () => {
           outside_temp_f: replies[11]
         });
     });
+    await client.quit();
   }
   catch(error){
     console.log(error);
