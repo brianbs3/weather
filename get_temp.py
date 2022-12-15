@@ -44,7 +44,7 @@ def read_temp(device, d):
         return json.dumps({"device": d, "c": temp_c, "f": temp_f})
 
   
-devices = ["28-011455020eaa",  "28-030894971c6d"]
+devices = ["28-0312949750dd", "28-011455020eaa",  "28-030894971c6d"]
 rrd = {}
 
 
@@ -55,17 +55,14 @@ for d in devices:
     #r.set(d, json.dumps(temps)['f'])
     str =   json.loads(temps)
     if(d == '28-011455020eaa'):
-      rrd.update({'Outside': str['f']})
-      rrd.update({'F1': str['f']})
-      rrd.update({'C1': str['c']})
-      red.set('F1', str['f'])
-      red.set('C1', str['c'])
+      red.set('inside_temp_f', str['f'])
+      red.set('inside_temp_c', str['c'])
+    elif(d == '28-0312949750dd'):
+      red.set('heater_temp_f', str['f'])
+      red.set('heater_temp_c', str['c'])
     elif(d == '28-030894971c6d'):
-      rrd.update({'Inside': str['f']})
-      rrd.update({'F2': str['f']})
-      rrd.update({'C2': str['c']})
-      red.set('F2', str['f'])
-      red.set('C2', str['c'])
+      red.set('outside_temp_f', str['f'])
+      red.set('outside_temp_c', str['c'])
 
 
 cpuTemp = get_cpu_temp()

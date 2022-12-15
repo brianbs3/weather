@@ -2,3 +2,4 @@ api/static/
 .env
 venv/
 __pycache__/
+old/

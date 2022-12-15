@@ -3,7 +3,7 @@ import redis
 red = redis.Redis(
     host='localhost')
 
-target_temp = 50
+target_temp = 60
 heater_status = 'off'
 
 f1 = float(red.get('F1'))
