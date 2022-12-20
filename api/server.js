@@ -22,6 +22,9 @@ app.use('/', express.static('/data/weather'));  //path.join(__dirname, 'static')
 const weather = require('./routes/weather');
 app.use('/weather', weather);
 
+const noaa = require('./routes/noaa');
+app.use('/noaa', noaa);
+
 const metrics = require('./routes/metrics');
 app.use('/metrics', metrics);
 

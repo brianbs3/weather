@@ -48,6 +48,32 @@ const getRedisWeather = async () => {
     });
 }
 
+const getNoaaWeather = async () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const client = await redis.createClient({ url: 'redis://localhost:6379' });
+      let weather;
+      client.on("error", function (error) {
+        console.error(error);
+      });
+      await client.multi()
+        .get('NOAA')
+        .exec((err, replies) => {
+          console.log(replies);
+          resolve(
+            {
+              NOAA: JSON.parse(replies[0])
+            });
+        });
+      await client.quit();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  });
+}
+
 module.exports = {
-    getRedisWeather
+    getRedisWeather,
+    getNoaaWeather
 };
