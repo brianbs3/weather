@@ -7,10 +7,10 @@ red = redis.Redis(
 timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.000Z')
 red.set('rrdUpdate_startTime', timestamp)
 
-f1 = float(red.get('F1'))
-f2 = float(red.get('F2'))
-c1 = float(red.get('C1'))
-c2 = float(red.get('C2'))
+f1 = float(red.get('inside_temp_f'))
+f2 = float(red.get('outside_temp_f'))
+c1 = float(red.get('inside_temp_c'))
+c2 = float(red.get('outside_temp_c'))
 humidity = float(red.get('humidity'))
 cpuTemp = float(red.get('CPU'))
 

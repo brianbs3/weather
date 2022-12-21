@@ -1,4 +1,4 @@
-import requests,time, redis
+import requests,time, redis, json
 
 red = redis.Redis(
     host='localhost')
@@ -15,11 +15,11 @@ if __name__ == '__main__':
         while status_code != 200:
             response = requests.request("GET", url, headers=headers, data=payload)
 
-            noaa = response.json()
+            noaa = json.loads(response.text)
             status_code = response.status_code
             if status_code != 200:
                 time.sleep(20)
             else:
-                red.set('NOAA', noaa)
+                red.set('NOAA', json.dumps(noaa))
     except KeyboardInterrupt:
         print("killed by keystroke")

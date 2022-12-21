@@ -32,19 +32,24 @@ def loop():
     while(True):         
         lcd.clear()
         lcd.setCursor(0,0)  # set cursor position
-        f1 = round(float(red.get('F1')), 3)
+        f1 = round(float(red.get('inside_temp_f')), 3)
         lcd.message("Inside Temp:\n{}".format(f1))
-        sleep(5)
+        sleep(3)
         lcd.clear()
         lcd.setCursor(0,0)  # set cursor position
-        f2 = round(float(red.get('F2')), 3)
+        f2 = round(float(red.get('outside_temp_f')), 3)
         lcd.message("Outside Temp:\n{}".format(f2))
-        sleep(5)
+        sleep(3)
         lcd.clear()
         lcd.setCursor(0,0)  # set cursor position
         heater_temp = round(float(red.get('heater_temp_f')), 3)
         lcd.message("Heater Temp:\n{}".format(heater_temp))
-        sleep(5)
+        sleep(3)
+        lcd.clear()
+        lcd.setCursor(0,0)  # set cursor position
+        heater_status = red.get('heater_status')
+        lcd.message("Heater Status:\n{}".format(heater_status.decode('utf-8')))
+        sleep(3)
         
 def destroy():
     lcd.clear()

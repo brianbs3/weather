@@ -3,10 +3,10 @@ import redis
 red = redis.Redis(
     host='localhost')
 
-target_temp = 60
+target_temp = 35
 heater_status = 'off'
 
-f1 = float(red.get('F1'))
+f1 = float(red.get('inside_temp_f'))
 if f1 < target_temp:
   heater_status = 'on'
 
