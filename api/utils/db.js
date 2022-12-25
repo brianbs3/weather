@@ -73,7 +73,25 @@ const getNoaaWeather = async () => {
   });
 }
 
+const setHeaterTemp = async (target_temp) => {
+    return new Promise(async (resolve, reject) => {
+        try{
+    const client = await redis.createClient({url: 'redis://localhost:6379'});
+    let weather;
+    client.on("error", function(error) {
+      console.error(error);
+    });
+
+    await client.quit();
+  }
+  catch(error){
+    console.log(error);
+  }
+    });
+}
+
 module.exports = {
     getRedisWeather,
-    getNoaaWeather
+    getNoaaWeather,
+    setHeaterTemp
 };

@@ -73,3 +73,4 @@ red.set('CPU', cpuTemp)
 
 timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.000Z')
 red.set('temperature_endTime', timestamp)
+print("cpu: {}".format(cpuTemp))
