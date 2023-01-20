@@ -4,12 +4,12 @@
   "description": "weather",
   "main": "server.js",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "memcached": "^2.2.2",
     "morgan": "^1.10.0",
     "redis": "^3.1.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

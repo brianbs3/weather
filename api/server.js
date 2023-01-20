@@ -6,6 +6,9 @@ const app = express();
 const router = express.Router();
 const morgan = require('morgan');
 const path = require('path');
+var cors = require('cors');
+
+app.use(cors())
 
 app.use(morgan('dev'));
 /*
