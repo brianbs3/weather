@@ -2,7 +2,7 @@
 
 const router = require('express').Router();
 const redis = require("redis");
-const {getRedisWeather} = require('../utils/db');
+const { getRedisWeather, setHeaterTemp } = require('../utils/db');
 
 router.get('/', async (req, res) => {
   const [w] = await Promise.all([
@@ -11,26 +11,21 @@ router.get('/', async (req, res) => {
   return res.json(w);
 });
 
-router.patch('/setHeaterTemp', type, async (req, res) => {
-    try {
-        const {target_temp} = req.body;
+router.post('/setHeaterTemp', async (req, res) => {
+    try{
+        const {target_temp} = req.query;
         
-        await db.sequelize.models.business_trips.upsert({
-            description: description,
-            notes: notes,
-            start_date: start_date,
-            end_date: end_date
-        });
-        let business_trip = await db.sequelize.models.business_trips.findOne({
-            where: { description: description, start_date: start_date, end_date: end_date }
-        });
+        console.log(target_temp);
+        const [w] = await Promise.all([
+            setHeaterTemp()
+        ]);
         
-        return res.status(201).json({business_trip});
-        
-    } catch (err) {
-        console.error('Error Setting Target Temperature: ', err);
-        return res.status(500).json({ status: 'FAILED', message: err.message });
+        return res.json(w);
     }
+    catch (err) {
+    console.error('Error uploading receipt: ', err);
+    return res.status(500).json({ status: 'FAILED', message: err.message });
+}
 });
 
 module.exports = router;

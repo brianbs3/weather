@@ -48,6 +48,7 @@ const getRedisWeather = async () => {
     });
 }
 
+
 const getNoaaWeather = async () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -77,11 +78,16 @@ const setHeaterTemp = async (target_temp) => {
     return new Promise(async (resolve, reject) => {
         try{
     const client = await redis.createClient({url: 'redis://localhost:6379'});
-    let weather;
+    
     client.on("error", function(error) {
       console.error(error);
     });
-
+    await client.set('shop_heater_target_temp', `${target_temp}`, function (err, reply) {
+      if(!err)
+        resolve(reply);
+      resolve(err);
+      
+    });
     await client.quit();
   }
   catch(error){
