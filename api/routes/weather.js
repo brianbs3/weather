@@ -17,7 +17,7 @@ router.post('/setHeaterTemp', async (req, res) => {
         
         console.log(target_temp);
         const [w] = await Promise.all([
-            setHeaterTemp()
+            setHeaterTemp(target_temp)
         ]);
         
         return res.json(w);

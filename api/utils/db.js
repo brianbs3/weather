@@ -82,6 +82,17 @@ const setHeaterTemp = async (target_temp) => {
     client.on("error", function(error) {
       console.error(error);
     });
+
+  //   client.set('foo', 'bar', (err, reply) => {
+  //     if (err) throw err;
+  //     console.log(reply);
+  
+  //     client.get('foo', (err, reply) => {
+  //         if (err) throw err;
+  //         console.log(reply);
+  //     });
+  // });
+    console.log(target_temp)
     await client.set('shop_heater_target_temp', `${target_temp}`, function (err, reply) {
       if(!err)
         resolve(reply);
