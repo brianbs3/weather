@@ -3,3 +3,4 @@ api/static/
 venv/
 __pycache__/
 old/
+api/package-lock.json

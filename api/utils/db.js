@@ -107,11 +107,15 @@ const setHeaterTemp = async (target_temp) => {
     });
 }
 
-const setPicoTemp = async (host, temp, ts) => {
+const setPicoTemp = async (host, onboard_temp, humidity, humidity_temp, ts) => {
     return new Promise(async (resolve, reject) => {
       try{
         const client = await redis.createClient({url: 'redis://localhost:6379'});
-        const vals = [`temp_f_${host}`, `${temp}`, `update_ts_${host}`, `${ts}`]
+        const vals = [
+          `onboard_temp_${host}`, `${onboard_temp}`, 
+          `update_ts_${host}`, `${ts}`,
+          `humidity_${host}`, `${humidity}`,
+          `humidity_temp_${host}`, `${humidity_temp}`]
         client.on("error", function(error) {
           console.error(error);
         });
