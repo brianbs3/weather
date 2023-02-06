@@ -7,10 +7,15 @@ const router = express.Router();
 const morgan = require('morgan');
 const path = require('path');
 var cors = require('cors');
+const compression = require('compression');
+
+require('dotenv').config();
 
 app.use(cors())
 
 app.use(morgan('dev'));
+app.use(express.json());
+app.use(compression());
 /*
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!').end();
@@ -30,6 +35,9 @@ app.use('/noaa', noaa);
 
 const metrics = require('./routes/metrics');
 app.use('/metrics', metrics);
+
+const pico = require('./routes/pico');
+app.use('/pico', pico);
 
 // Start the server
 const PORT = process.env.PORT || 8081;
