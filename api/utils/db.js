@@ -107,8 +107,32 @@ const setHeaterTemp = async (target_temp) => {
     });
 }
 
+const setPicoTemp = async (host, temp, ts) => {
+    return new Promise(async (resolve, reject) => {
+      try{
+        const client = await redis.createClient({url: 'redis://localhost:6379'});
+        const vals = [`temp_f_${host}`, `${temp}`, `update_ts_${host}`, `${ts}`]
+        client.on("error", function(error) {
+          console.error(error);
+        });
+
+        await client.mset(vals, function (err, reply) {
+          if(!err)
+            resolve(reply);
+          resolve(err);
+          
+        });
+        await client.quit();
+      }
+      catch(error){
+        console.log(error);
+      }
+    });
+}
+
 module.exports = {
     getRedisWeather,
     getNoaaWeather,
-    setHeaterTemp
+    setHeaterTemp,
+    setPicoTemp
 };
