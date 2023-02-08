@@ -1,5 +1,6 @@
 const redis = require("redis");
 const client = redis.createClient({url: 'redis://localhost:6379'});
+const knex = require('../config/knex');
 
 const getRedisWeather = async () => {
     return new Promise(async (resolve, reject) => {
@@ -135,9 +136,27 @@ const setPicoTemp = async (host, humidity, temp_c, temp_f, ts) => {
     });
 }
 
+const updatePico = async (data) => {
+  return new Promise(async (resolve, reject) => {
+    try{
+      
+      const m = await knex('pico')
+      .where('id', data.id)
+      .update(data)
+
+      resolve(m);
+      
+    }
+    catch(error){
+      console.log(error);
+    }
+  });
+}
+
 module.exports = {
     getRedisWeather,
     getNoaaWeather,
     setHeaterTemp,
-    setPicoTemp
+    setPicoTemp,
+    updatePico
 };

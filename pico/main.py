@@ -28,15 +28,18 @@ while True:
     humidity = d.humidity()    # eg. 41 (% RH)
 
     temp_f = (temp_c * (9.0 / 5.0)) + 32.0
-    
-    response = urequests.post("http://bsserver.home.bs:8081/pico", json={
-        'mac': mac,
-        'ip': ip,
-        'temp_f': temp_f,
-        'temp_c': temp_c,
-        'humidity': humidity
-        })
-    response.close()
+    try:
+        response = urequests.post("http://bsserver.home.bs:8081/pico", json={
+            'mac': mac,
+            'ip': ip,
+            'temp_f': temp_f,
+            'temp_c': temp_c,
+            'humidity': humidity
+            })
+        response.close()
+
+    except:
+        pass
     
     led.low()
-    time.sleep(3)
+    time.sleep(30)
