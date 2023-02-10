@@ -7,9 +7,11 @@ const moment = require('moment');
 const { setPicoTemp, updatePico } = require('../utils/db');
 const { getPicoReadings } = require('../utils/mysql');
 
-router.get('/',  (req, res) => {
-  
-  return res.json({endpoint: 'pico'});
+router.get('/',  async (req, res) => {
+  const pico = await knex.select()
+    .from('pico');
+    
+  return res.json(pico);
 });
 
 router.get('/metrics', async (req, res) => {
@@ -24,6 +26,27 @@ router.get('/metrics', async (req, res) => {
 `;
   Object.keys(w).forEach((k) => {
     temp_f += `temp_f{alias="${w[k].location}"} ${w[k].temp_f}
+`
+  })
+  let humidity_temp_f = `#HELP temperature in F
+#TYPE humidity_temp_f gauge
+`;
+  Object.keys(w).forEach((k) => {
+    humidity_temp_f += `humidity_temp_f{alias="${w[k].location}"} ${w[k].humidity_temp_f}
+`
+  })
+  let onboard_temp_f = `#HELP temperature in F
+#TYPE onboard_temp_f gauge
+`;
+  Object.keys(w).forEach((k) => {
+    onboard_temp_f += `onboard_temp_f{alias="${w[k].location}"} ${w[k].onboard_temp_f}
+`
+  })
+  let onewire_temp_f = `#HELP temperature in F
+#TYPE onewire_temp_f gauge
+`;
+  Object.keys(w).forEach((k) => {
+    onewire_temp_f += `onewire_temp_f{alias="${w[k].location}"} ${w[k].onewire_temp_f}
 `
   })
   let humidity = `#HELP humidity
@@ -42,7 +65,7 @@ router.get('/metrics', async (req, res) => {
 `
     })
   
-  const metrics = `${temp_f}${humidity}${dewpoint}`
+  const metrics = `${temp_f}${humidity}${dewpoint}${humidity_temp_f}${onboard_temp_f}${onewire_temp_f}`
   
   return res.format ({
     'text/plain': function() {
@@ -53,12 +76,15 @@ router.get('/metrics', async (req, res) => {
 });
 
 router.post('/', async function(req, res) {
-    const mac = req.body.mac || req.query.mac;
-    const temp_c = req.body.temp_c || req.query.temp_c;
-    const temp_f = req.body.temp_f || req.query.temp_f;
-    const humidity = req.body.humidity || req.query.humidity;
-    const ip = req.body.ip || req.query.ip;
-    const version = req.body.version || req.query.version;
+  const {mac, ip, version, onboard_temp_c, onboard_temp_f, humidity, humidity_temp_c, humidity_temp_f,onewire_temp_f, onewire_temp_c} = req.body;
+    // const mac = req.body.mac || req.query.mac;
+    // const onboard_temp_c = req.body.onboard_temp_c || req.query.onboard_temp_c;
+    // const onboard_temp_f = req.body.onboard_temp_f || req.query.onboard_temp_f;
+    // const humidity_temp_c = req.body.humidity_temp_c || req.query.humidity_temp_c;
+    // const humidity_temp_f = req.body.humidity_temp_f || req.query.humidity_temp_f;
+    // const humidity = req.body.humidity || req.query.humidity;
+    // const ip = req.body.ip || req.query.ip;
+    // const version = req.body.version || req.query.version;
     const ts = moment.utc().local().format('YYYY-MM-DD HH:mm:ss');
     const m = await knex.select()
         .from('pico')
@@ -75,8 +101,12 @@ router.post('/', async function(req, res) {
       ip: ip,
       hostname: host,
       location: location,
-      temp_c: temp_c,
-      temp_f: temp_f,
+      onboard_temp_c: onboard_temp_c,
+      onboard_temp_f: onboard_temp_f,
+      humidity_temp_c: humidity_temp_c,
+      humidity_temp_f: humidity_temp_f,
+      onewire_temp_c: onewire_temp_c,
+      onewire_temp_f: onewire_temp_f,
       humidity: humidity,
       version: version,
       poll_interval: poll_interval,
@@ -87,8 +117,8 @@ router.post('/', async function(req, res) {
       updatePico(data)
     ]); 
     
-    const r = await setPicoTemp(host, humidity, temp_c, temp_f, ts);
-    data.redisStatus = r;
+    // const r = await setPicoTemp(host, humidity, temp_c, temp_f, ts);
+    // data.redisStatus = r;
     res.json(data)
 });
 

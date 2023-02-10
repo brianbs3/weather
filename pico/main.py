@@ -6,12 +6,14 @@ import ubinascii
 import random
 from machine import Pin
 import dht
+import onewire, ds18x20
 
-version = "0.0.1"
-poll_interval = 3
+version = "0.0.4"
+poll_interval = 30
 
 led = Pin("LED", Pin.OUT)
 led.high()
+OneWireSensorPin = Pin(28, Pin.IN)
 
 wlan = network.WLAN(network.STA_IF)
 
@@ -22,39 +24,56 @@ led.low()
 time.sleep(2)
 sensor_temp = machine.ADC(4)
 conversion_factor = 3.3 / (65535)
+#onewire_sensor = ds18x20.DS18X20(onewire.OneWire(OneWireSensorPin))
+#roms = onewire_sensor.scan()
+
 while True:
     try:
         led.high()
         reading = sensor_temp.read_u16() * conversion_factor 
-        temp_c = 27 - (reading - 0.706)/0.001721
+        onboard_temp_c = 27 - (reading - 0.706)/0.001721
         
     # Get Humidity Sensor Readings
         d = dht.DHT11(machine.Pin(16))
         d.measure()
-#        temp_c = d.temperature() # eg. 23 (°C)
+        humidity_temp_c = d.temperature() # eg. 23 (°C)
         humidity = d.humidity()    # eg. 41 (% RH)
-    
-        temp_f = (temp_c * (9.0 / 5.0)) + 32.0
-    
+#        onewire_sensor.convert_temp()
+        onewire_temp_c = 0
+        onewire_temp_f = 0
+#        for rom in roms:
+
+#            onewire_temp_c = round(onewire_sensor.read_temp(rom),4)
+#            onewire_temp_f = (onewire_temp_c * (9.0 / 5.0)) + 32.0
+        
+        onboard_temp_f = (onboard_temp_c * (9.0 / 5.0)) + 32.0
+        humidity_temp_f = (humidity_temp_c * (9.0 / 5.0)) + 32.0
+        
         response = urequests.post("http://bsserver.home.bs:8081/pico", json={
             'mac': mac,
             'ip': ip,
-            'temp_f': temp_f,
-            'temp_c': temp_c,
+            'onboard_temp_f': onboard_temp_f,
+            'onboard_temp_c': onboard_temp_c,
+            'humidity_temp_f': humidity_temp_f,
+            'humidity_temp_c': humidity_temp_c,
+            'onewire_temp_c': onewire_temp_c,
+            'onewire_temp_f': onewire_temp_f,
             'humidity': humidity,
             'version': version
             })
 
         if 'poll_interval' in response.json():
             poll_interval = response.json()['poll_interval']
-        else:
-            print("no poll interval")
+        
         response.close()
-        print("temp_f: {}".format(temp_f))
-        print("humidity: {}".format(humidity))
+        print("onboard_temp_f: {}".format(onboard_temp_f))
+        print("humidity_temp_f: {}".format(humidity_temp_f))
+        print("onewire_temp_f: {}".format(onewire_temp_f))
+#        print("humidity: {}".format(humidity))
     except Exception as e:
         print("caught Exception {}".format(e))
         pass
     
     led.low()
     time.sleep(poll_interval)
+
