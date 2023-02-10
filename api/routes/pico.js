@@ -58,14 +58,16 @@ router.post('/', async function(req, res) {
     const temp_f = req.body.temp_f || req.query.temp_f;
     const humidity = req.body.humidity || req.query.humidity;
     const ip = req.body.ip || req.query.ip;
+    const version = req.body.version || req.query.version;
     const ts = moment.utc().local().format('YYYY-MM-DD HH:mm:ss');
     const m = await knex.select()
         .from('pico')
         .where('mac', mac)
-    console.log(m);
+  
     const location = (m.length > 0) ? m[0].location : "";
     const host = (m.length > 0) ? m[0].hostname : "";
     const id = (m.length > 0) ? m[0].id : "";
+    const poll_interval = (m.length > 0) ? m[0].poll_interval : "";
     
     const data = {
       id: id,
@@ -76,6 +78,8 @@ router.post('/', async function(req, res) {
       temp_c: temp_c,
       temp_f: temp_f,
       humidity: humidity,
+      version: version,
+      poll_interval: poll_interval,
       updated: ts
     }
     console.log(data)

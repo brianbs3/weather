@@ -7,6 +7,9 @@ import random
 from machine import Pin
 import dht
 
+version = "0.0.1"
+poll_interval = 3
+
 led = Pin("LED", Pin.OUT)
 led.high()
 
@@ -38,8 +41,14 @@ while True:
             'ip': ip,
             'temp_f': temp_f,
             'temp_c': temp_c,
-            'humidity': humidity
+            'humidity': humidity,
+            'version': version
             })
+
+        if 'poll_interval' in response.json():
+            poll_interval = response.json()['poll_interval']
+        else:
+            print("no poll interval")
         response.close()
         print("temp_f: {}".format(temp_f))
         print("humidity: {}".format(humidity))
@@ -48,4 +57,4 @@ while True:
         pass
     
     led.low()
-    time.sleep(30)
+    time.sleep(poll_interval)
