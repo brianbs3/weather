@@ -1,4 +1,3 @@
-api/static/
 .env
 venv/
 __pycache__/
