@@ -5,41 +5,10 @@ body{
     background: #000;
 }
 
-.headerTable{
-    width: 100%;
+.updatedClassStale {
+    background-color: red;
 }
 
-.bsFinanceVersion{
-    text-align: right;
-}
-
-.formTable tr td{
-    /* border: 1px dotted; */
-    width: 100%;
-    text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-logoBanner{
-    background: #000;
-    color: #ccc;
-    text-emphasis-color: #ccc;
-}
-
-.loginHeader{
-    color: #ccc;
-    padding-right: 50px;
-}
-
-.headerVersion{
-    color: #ccc;
-    padding-left: 100px;
-}
-
-.bsModal td{
-    background-color: #eee;
-    color: #222;
-    padding-right: 20px;
-    padding-left: 20px;
+.updatedClassOK {
+    background-color: green;
 }

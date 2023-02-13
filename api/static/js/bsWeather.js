@@ -1,4 +1,4 @@
-
+const latestVersion = "0.0.4";
 
 $(document).ready(() => {
    console.log(`ready`)
@@ -24,8 +24,17 @@ function populateDeviceTable(){
                 let tr = $(`<tr>`)
                 Object.keys(data[col]).forEach((val) => {
                     if(val === "updated"){
-                        const ts = new Date(data[col][val])
-                        tr.append(`<td>${ts.toLocaleString()}</td>`)
+                        let updatedClass = "btn btn-success";
+                        const ts = moment(data[col][val]);
+                        if(ts < moment().subtract(5, 'minutes'))
+                            updatedClass = "btn btn-danger";
+                        tr.append(`<td><button type=button class='${updatedClass}'>${ts.format('DD-MMM-YYYY hh:mm:ss A')}</button></td>`)
+                    }
+                    else if(val === "version") {
+                        let versionClass = "btn btn-success"
+                        if(data[col][val] !== latestVersion)
+                            versionClass = "btn btn-danger"
+                        tr.append(`<td><button type=button class='${versionClass}'>${data[col][val]}</button></td>`)
                     }
                     else{
                         tr.append(`<td>${data[col][val]}</td>`)

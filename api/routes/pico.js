@@ -60,12 +60,12 @@ router.get('/metrics', async (req, res) => {
 #TYPE dewpoint gauge
 `;
     Object.keys(w).forEach((k) => {
-      const dp = w[k].temp_f - ((100 - w[k].humidity) * (9/25));
+      const dp = w[k].onewire_temp_f - ((100 - w[k].humidity) * (9/25));
       dewpoint += `dewpoint{alias="${w[k].location}"} ${dp}
 `
     })
   
-  const metrics = `${temp_f}${humidity}${dewpoint}${humidity_temp_f}${onboard_temp_f}${onewire_temp_f}`
+  const metrics = `${humidity}${dewpoint}${humidity_temp_f}${onboard_temp_f}${onewire_temp_f}`
   
   return res.format ({
     'text/plain': function() {
