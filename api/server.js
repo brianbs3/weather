@@ -9,6 +9,7 @@ const path = require('path');
 var cors = require('cors');
 const compression = require('compression');
 
+
 require('dotenv').config();
 
 app.use(cors())
@@ -16,6 +17,7 @@ app.use(cors())
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(compression());
+
 /*
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!').end();
@@ -39,6 +41,9 @@ app.use('/metrics', metrics);
 
 const pico = require('./routes/pico');
 app.use('/pico', pico);
+
+const qrcode = require('./routes/qrcode');
+app.use('/qrcode', qrcode);
 
 // Start the server
 const PORT = process.env.PORT || 8081;
