@@ -8,13 +8,12 @@ from machine import Pin
 import dht
 import onewire, ds18x20
 
-version = "0.0.4"
-poll_interval = 30
+version = "0.0.5"
+poll_interval = 3
 
-led = Pin("LED", Pin.OUT)
+led = Pin(15, Pin.OUT)
 led.high()
 OneWireSensorPin = Pin(28, Pin.IN)
-
 wlan = network.WLAN(network.STA_IF)
 
 mac = ubinascii.hexlify(network.WLAN().config('mac'), ':').decode()
@@ -24,8 +23,8 @@ led.low()
 time.sleep(2)
 sensor_temp = machine.ADC(4)
 conversion_factor = 3.3 / (65535)
-#onewire_sensor = ds18x20.DS18X20(onewire.OneWire(OneWireSensorPin))
-#roms = onewire_sensor.scan()
+onewire_sensor = ds18x20.DS18X20(onewire.OneWire(OneWireSensorPin))
+roms = onewire_sensor.scan()
 
 while True:
     try:
@@ -38,26 +37,18 @@ while True:
         d.measure()
         humidity_temp_c = d.temperature() # eg. 23 (°C)
         humidity = d.humidity()    # eg. 41 (% RH)
-#        onewire_sensor.convert_temp()
+        onewire_sensor.convert_temp()
         onewire_temp_c = 0
-        onewire_temp_f = 0
-#        for rom in roms:
-
-#            onewire_temp_c = round(onewire_sensor.read_temp(rom),4)
-#            onewire_temp_f = (onewire_temp_c * (9.0 / 5.0)) + 32.0
-        
-        onboard_temp_f = (onboard_temp_c * (9.0 / 5.0)) + 32.0
-        humidity_temp_f = (humidity_temp_c * (9.0 / 5.0)) + 32.0
+    
+        for rom in roms:
+            onewire_temp_c = round(onewire_sensor.read_temp(rom),4)
         
         response = urequests.post("http://bsserver.home.bs:8081/pico", json={
             'mac': mac,
             'ip': ip,
-            'onboard_temp_f': onboard_temp_f,
             'onboard_temp_c': onboard_temp_c,
-            'humidity_temp_f': humidity_temp_f,
             'humidity_temp_c': humidity_temp_c,
             'onewire_temp_c': onewire_temp_c,
-            'onewire_temp_f': onewire_temp_f,
             'humidity': humidity,
             'version': version
             })
@@ -66,9 +57,9 @@ while True:
             poll_interval = response.json()['poll_interval']
         
         response.close()
-        print("onboard_temp_f: {}".format(onboard_temp_f))
-        print("humidity_temp_f: {}".format(humidity_temp_f))
-        print("onewire_temp_f: {}".format(onewire_temp_f))
+        print("onboard_temp_c: {}".format(onboard_temp_c))
+        print("humidity_temp_c: {}".format(humidity_temp_c))
+        print("onewire_temp_fc: {}".format(onewire_temp_c))
 #        print("humidity: {}".format(humidity))
     except Exception as e:
         print("caught Exception {}".format(e))
@@ -76,4 +67,6 @@ while True:
     
     led.low()
     time.sleep(poll_interval)
+
+
 
