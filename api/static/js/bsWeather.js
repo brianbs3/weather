@@ -1,10 +1,13 @@
-const latestVersion = "0.0.4";
+const latestVersion = "0.0.6";
 
 $(document).ready(() => {
    console.log(`ready`)
    populateDeviceTable();
 });
 
+function c2f(c) {
+    return (c * (9.0 / 5.0)) + 32.0
+}
 
 function populateDeviceTable(){
     $.ajax({
@@ -35,6 +38,12 @@ function populateDeviceTable(){
                         if(data[col][val] !== latestVersion)
                             versionClass = "btn btn-danger"
                         tr.append(`<td><button type=button class='${versionClass}'>${data[col][val]}</button></td>`)
+                    }
+                    else if(val === "onewire_temp_c"){
+                        tr.append(`<td>${c2f(data[col][val])} &#176;F (${data[col][val]} &#176;C)</td>`)
+                    }
+                    else if(val ==="ledColor"){
+                        tr.append(`<td><div class='led led_${data[col][val]}'>LED</div></td>`)
                     }
                     else{
                         tr.append(`<td>${data[col][val]}</td>`)

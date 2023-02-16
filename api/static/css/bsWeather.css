@@ -12,3 +12,22 @@ body{
 .updatedClassOK {
     background-color: green;
 }
+
+.led {
+    text-align: center;
+}
+.led_orange {
+    background-color: rgb(255, 159, 70);
+    color: black;
+    
+}
+
+.led_blue {
+    background-color: rgb(69, 137, 232);
+    color: black;
+}
+
+.led_yellow {
+    background-color: rgb(255, 255, 0);
+    color: black;
+}

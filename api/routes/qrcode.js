@@ -11,11 +11,17 @@ const { getPicoReadings } = require('../utils/mysql');
 
 router.get('/',  async (req, res) => {
   
-  const qr = await QRCode.toDataURL(uuidv4())
-  let img = Buffer.from(qr, 'base64');
   
-  console.log(qr);
-  return res.send(`<img src='${qr}'>`);
+  // let img = Buffer.from(qr, 'base64');
+  let str=""
+  for(let i = 1; i <= 60; i++){
+    const uuid = uuidv4();
+    const qr = await QRCode.toDataURL(uuid)
+    str += `${i} (${uuid}): <img src='${qr}'><br>`;
+  }
+  
+  console.log(str);
+  return res.send(str);
 });
 
 module.exports = router;

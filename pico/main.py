@@ -8,7 +8,7 @@ from machine import Pin
 import dht
 import onewire, ds18x20
 
-version = "0.0.5"
+version = "0.0.6"
 poll_interval = 3
 
 led = Pin(15, Pin.OUT)
@@ -17,6 +17,7 @@ OneWireSensorPin = Pin(28, Pin.IN)
 wlan = network.WLAN(network.STA_IF)
 
 mac = ubinascii.hexlify(network.WLAN().config('mac'), ':').decode()
+print(mac)
 ip = wlan.ifconfig()[0]
 
 led.low()
@@ -37,6 +38,7 @@ while True:
         d.measure()
         humidity_temp_c = d.temperature() # eg. 23 (°C)
         humidity = d.humidity()    # eg. 41 (% RH)
+        print(humidity)
         onewire_sensor.convert_temp()
         onewire_temp_c = 0
     
@@ -67,6 +69,3 @@ while True:
     
     led.low()
     time.sleep(poll_interval)
-
-
-
