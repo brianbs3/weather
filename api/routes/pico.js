@@ -54,7 +54,7 @@ router.get('/metrics', async (req, res) => {
 `;
     Object.keys(w).forEach((k) => {
       const dp = c2f(w[k].onewire_temp_c) - ((100 - w[k].humidity) * (9/25));
-      dewpoint += `dewpoint{alias="${w[k].location}"} ${dp}
+      dewpoint += `dewpoint{alias="${w[k].location}"} ${dp.toFixed(4)}
 `
     })
   
