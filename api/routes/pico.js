@@ -25,28 +25,28 @@ router.get('/metrics', async (req, res) => {
 #TYPE onewire_temp_f gauge
 `;
   Object.keys(w).forEach((k) => {
-    onewire_temp_f += `onewire_temp_f{alias="${w[k].location}"} ${c2f(w[k].onewire_temp_c)}
+    onewire_temp_f += `onewire_temp_f{alias="${w[k].location}",subLocation="${w[k].subLocation}",hostname="${w[k].hostname}"} ${c2f(w[k].onewire_temp_c)}
 `
   })
   let onboard_temp_f = `#HELP temperature in F
 #TYPE onboard_temp_f gauge
 `;
   Object.keys(w).forEach((k) => {
-    onboard_temp_f += `onboard_temp_f{alias="${w[k].location}"} ${c2f(w[k].onboard_temp_c)}
+    onboard_temp_f += `onboard_temp_f{alias="${w[k].location}",subLocation="${w[k].subLocation}",hostname="${w[k].hostname}"} ${c2f(w[k].onboard_temp_c)}
 `
   })
   let humidity_temp_f = `#HELP temperature in F
 #TYPE humidity_temp_f gauge
 `;
   Object.keys(w).forEach((k) => {
-    humidity_temp_f += `humidity_temp_f{alias="${w[k].location}"} ${c2f(w[k].humidity_temp_c)}
+    humidity_temp_f += `humidity_temp_f{alias="${w[k].location}",subLocation="${w[k].subLocation}",hostname="${w[k].hostname}"} ${c2f(w[k].humidity_temp_c)}
 `
   })
   let humidity = `#HELP humidity
 #TYPE humidity gauge
 `;
   Object.keys(w).forEach((k) => {
-    humidity += `humidity{alias="${w[k].location}"} ${w[k].humidity}
+    humidity += `humidity{alias="${w[k].location}",subLocation="${w[k].subLocation}",hostname="${w[k].hostname}"} ${w[k].humidity}
 `
   })
   let dewpoint = `#HELP dewpoint
@@ -54,7 +54,7 @@ router.get('/metrics', async (req, res) => {
 `;
     Object.keys(w).forEach((k) => {
       const dp = c2f(w[k].onewire_temp_c) - ((100 - w[k].humidity) * (9/25));
-      dewpoint += `dewpoint{alias="${w[k].location}"} ${dp.toFixed(4)}
+      dewpoint += `dewpoint{alias="${w[k].location}",subLocation="${w[k].subLocation}",hostname="${w[k].hostname}"} ${dp.toFixed(4)}
 `
     })
   
