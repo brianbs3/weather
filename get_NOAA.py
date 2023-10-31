@@ -16,6 +16,8 @@ if __name__ == '__main__':
             response = requests.request("GET", url, headers=headers, data=payload)
 
             noaa = json.loads(response.text)
+            for n in noaa['properties']['periods']:
+              print("name: {} -> detailedForecast: {}".format(n['name'], n['detailedForecast']))
             status_code = response.status_code
             if status_code != 200:
                 time.sleep(20)

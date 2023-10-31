@@ -27,7 +27,7 @@ app.get('/test', (req, res) => {
     return res.json({message: 'test'});
 });
 
-app.use('/', express.static('/data/weather'));  //path.join(__dirname, 'static')))
+//app.use('/', express.static('/data/weather'));  //path.join(__dirname, 'static')))
 app.use('/', express.static(path.join(__dirname, 'static')));  //
 
 const weather = require('./routes/weather');
